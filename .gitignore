@@ -1,0 +1,18 @@
+# Secrets and private deployment
+.secret
+.env
+.env.*
+!.env.example
+
+# Live personal data — never commit a real copy
+synced_state.json
+purged_apps.json
+# Real watch history can contain thousands of personal job-board ids
+veille_seen.json
+
+# Local editor / OS
+.DS_Store
+__pycache__/
+*.pyc
+*.bak
+.wrangler/
