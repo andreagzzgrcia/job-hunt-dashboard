@@ -155,8 +155,8 @@ section.ac textarea[data-f="body"]{font:400 15px/1.7 var(--sans);padding:20px;ba
 }
 @media(max-width:800px){.acrh{display:none}}
 </style></head><body>
-<header class="top"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap"><a class="brand" href="../" id="brandlink" aria-label="Accueil"><svg width="92" height="40" viewBox="0 0 92 40" role="img" aria-label="Tech &amp; Law Job Search"><line x1="2" y1="24" x2="90" y2="24" stroke="#F4F2ED" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="15" r="9" fill="#F4F2ED"/><circle cx="78" cy="21" r="3" fill="#E9993A"/><polygon points="46,26 40,36 52,36" fill="#F4F2ED"/></svg><span>Tech &amp; Law Job Search</span></a></div>
-<nav class="tabs" aria-label="Onglets" id="tabs"><button class="tab" data-tab="ann">Job announcements <span class="cnt" id="c-ann">0</span></button><button class="tab" data-tab="sp">Candidatures spontanées Andrea <span class="cnt" id="c-sp">0</span></button><button class="tab" data-tab="rec">Chasseurs de tête <span class="cnt" id="c-rec">0</span></button><button class="tab" data-tab="tgt">Candidatures spontanées – cibles <span class="cnt" id="c-tgt">0</span></button><button class="tab" data-tab="suivi">Suivi</button></nav></header><div class="crumb"><a id="homelink" class="home" href="../" style="display:none">← Accueil</a></div>
+<header class="top"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap"><a class="brand" href="../" id="brandlink" aria-label="Accueil"><span>Tech &amp; Law Job Search</span></a></div>
+<nav class="tabs" aria-label="Onglets" id="tabs"><button class="tab" data-tab="ann">Job announcements <span class="cnt" id="c-ann">0</span></button><button class="tab" data-tab="sp">Candidatures spontanées <span class="cnt" id="c-sp">0</span></button><button class="tab" data-tab="rec">Chasseurs de tête <span class="cnt" id="c-rec">0</span></button><button class="tab" data-tab="tgt">Candidatures spontanées – cibles <span class="cnt" id="c-tgt">0</span></button><button class="tab" data-tab="suivi">Suivi</button></nav></header><div class="crumb"><a id="homelink" class="home" href="../" style="display:none">← Accueil</a></div>
 <script>if(/^https?:$/.test(location.protocol)&&/\/legal\/$/.test(location.pathname))document.getElementById("homelink").style.display="inline-block";else document.getElementById("brandlink").removeAttribute("href")</script>
 <div class="qwrap" id="p-ann" data-pane="ann"><div class="qsec" id="q-ann"></div></div>
 <div class="qwrap" id="p-sp" data-pane="sp" hidden><div class="qsec" id="q-sp"></div>
@@ -251,7 +251,7 @@ const badge=(s,sm)=>{const[l,bg,fg]=ST[s]||[s,"#EBECE9","#363D1F"];return`<span 
 const isMail=s=>/^[^@\s,;]+@[^@\s,;]+\.[a-z]{2,}$/i.test(String(s||"").trim());
 const R_=()=>(DATA.recruiters||[]),T_=()=>(DATA.targets||[]);
 const kindOf=a=>a.kind==="recruiter"?"rec":a.kind==="target"?"tgt":isSp(a)?"sp":"ann";
-function defSubj(a){if(a.subject)return a.subject;const k=kindOf(a);return k==="rec"?"Candidature – Juriste / avocate junior IP/IT, data et IA – Andrea Gonzalez":k==="ann"?"Candidature – "+(a.role||"")+" – Andrea Gonzalez":"Candidature spontanée – Andrea Gonzalez"}
+function defSubj(a){if(a.subject)return a.subject;const k=kindOf(a);return k==="rec"?"Candidature – Juriste / avocate junior IP/IT, data et IA":k==="ann"?"Candidature – "+(a.role||"")+"":"Candidature spontanée"}
 const defTo=a=>a.email||"";
 const curTo=a=>{const e=edited(a);return e&&e.to!=null?e.to:defTo(a)};
 const curSu=a=>{const e=edited(a);return e&&e.su!=null?e.su:defSubj(a)};
@@ -345,7 +345,7 @@ all.forEach(a=>{let s=eff(a).status;if(isSp(a)){if(s==="sent")m.s++;else if(s===
  if(enCours)return; // already in En cours — do not double-count via n[s]
  n[s]=(n[s]||0)+1});
 const QS=queues(),qn=k=>QS[k].reduce((x,q)=>x+q.items.length,0),tb={ann:qn("ann"),sp:qn("sp"),rec:qn("rec"),tgt:qn("tgt")};n.todo=tb.ann+tb.sp+tb.rec+tb.tgt;
-const todoTip=`Annonces ${tb.ann} · Spontanées Andrea ${tb.sp} · Chasseurs de tête ${tb.rec} · Cibles ${tb.tgt}`;
+const todoTip=`Annonces ${tb.ann} · Spontanées ${tb.sp} · Chasseurs de tête ${tb.rec} · Cibles ${tb.tgt}`;
 const ivTip=ivs.map(a=>(a.firm||a.name)+(a.interviewAt?" – "+fmt(a.interviewAt):"")).join(" · ");
 const nout=n.not_interested+n.expired+n.no_fit+n.closed;
 document.getElementById("lead").textContent=`${n.sent} candidature${n.sent>1?"s":""} envoyée${n.sent>1?"s":""}, ${n.rejected} refus, ${n.in_progress} en cours${ivTip?" ("+ivTip+")":""}. ${n.todo} piste${n.todo>1?"s":""} à traiter (${todoTip}).`;

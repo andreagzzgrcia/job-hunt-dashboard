@@ -11,7 +11,7 @@ export async function route(req,env){const u=new URL(req.url),base="/"+env.SECRE
  if(p==="/"||p==="/index.html")return html(HOME);
  if(p==="/legal/"||p==="/legal/index.html")return html(HTML);
  if(p==="/business/"||p==="/business/index.html"){const b=await env.KV.get("business_html");return html(b||PLACE)}
- if(/^\/((legal|business)\/)?manifest\.webmanifest$/.test(p))return new Response(JSON.stringify({name:"Recherche d'emploi – Andrea",short_name:"Candidatures",start_url:base+"/",scope:base+"/",display:"standalone",background_color:"#F4F2ED",theme_color:"#363D1F",icons:[{src:base+"/apple-touch-icon.png",sizes:"180x180",type:"image/png"}]}),{headers:{...H,"Content-Type":"application/manifest+json"}});
+ if(/^\/((legal|business)\/)?manifest\.webmanifest$/.test(p))return new Response(JSON.stringify({name:"Recherche d'emploi",short_name:"Candidatures",start_url:base+"/",scope:base+"/",display:"standalone",background_color:"#F4F2ED",theme_color:"#363D1F",icons:[{src:base+"/apple-touch-icon.png",sizes:"180x180",type:"image/png"}]}),{headers:{...H,"Content-Type":"application/manifest+json"}});
  if(/^\/((legal|business)\/)?apple-touch-icon\.png$/.test(p))return new Response(Uint8Array.from(atob(ICON),c=>c.charCodeAt(0)),{headers:{...H,"Content-Type":"image/png"}});
  if(p==="/api/state"||p==="/legal/api/state"||p==="/business/api/state"){const SK=p.startsWith("/business/")?"bd_state":"state";let cur=(await env.KV.get(SK,"json"))||{};
   if(req.method==="GET")return Response.json(merge(cur,{}),{headers:H});
